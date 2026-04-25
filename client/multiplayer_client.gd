@@ -63,7 +63,7 @@ func _offer_created(type: String, data: String, id: int) -> void:
 
 
 func _connected(id: int, use_mesh: bool) -> void:
-	print("Connected %d, mesh: %s" % [id, use_mesh])
+	print("Connected %d" % [id])
 	if use_mesh:
 		rtc_mp.create_mesh(id)
 	elif id == 1:

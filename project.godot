@@ -16,7 +16,7 @@ This demo is divided in 4 parts.
 The protocol is text based, and composed by a command and possibly
 multiple payload arguments, each separated by a new line."
 config/tags=PackedStringArray("demo", "network", "official")
-run/main_scene="uid://bfi02p842hxck"
+run/main_scene="uid://ywkovavp6m8n"
 config/features=PackedStringArray("4.6")
 
 [debug]

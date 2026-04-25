@@ -2,12 +2,15 @@
 
 [ext_resource type="Script" uid="uid://wgfb8vvpxkha" path="res://demo/client_ui.gd" id="1"]
 [ext_resource type="Script" uid="uid://dd8irriksq2si" path="res://client/multiplayer_client.gd" id="2"]
+[ext_resource type="PackedScene" uid="uid://7alj3l2ds1x2" path="res://map.tscn" id="3_jkibb"]
+[ext_resource type="Script" uid="uid://ciw6wl1uvy7du" path="res://gridworld.gd" id="4_dmi1k"]
 
 [node name="ClientUI" type="Control" unique_id=1968491779]
+custom_minimum_size = Vector2(320, 200)
 layout_mode = 3
 anchors_preset = 0
-offset_right = 1024.0
-offset_bottom = 600.0
+offset_right = 480.0
+offset_bottom = 302.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 script = ExtResource("1")
@@ -15,72 +18,113 @@ script = ExtResource("1")
 [node name="Client" type="Node" parent="." unique_id=1003102609]
 script = ExtResource("2")
 
-[node name="VBoxContainer" type="VBoxContainer" parent="." unique_id=362837569]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
+[node name="gridworld" parent="." unique_id=1810495705 instance=ExtResource("3_jkibb")]
+unique_name_in_owner = true
+script = ExtResource("4_dmi1k")
 
-[node name="Connect" type="HBoxContainer" parent="VBoxContainer" unique_id=2018202730]
+[node name="MultiplayerSpawner" type="MultiplayerSpawner" parent="gridworld" unique_id=2067906896]
+_spawnable_scenes = PackedStringArray("uid://bt7edhhacv13l")
+spawn_path = NodePath("..")
+
+[node name="MenuBackground" type="ColorRect" parent="." unique_id=1754278269]
+layout_mode = 0
+offset_left = 1.0
+offset_top = 8.0
+offset_right = 1159.0
+offset_bottom = 643.0
+size_flags_vertical = 3
+localize_numeral_system = false
+color = Color(0.3854925, 0.38549247, 0.38549247, 1)
+
+[node name="Players" type="Control" parent="." unique_id=493135582]
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="." unique_id=442462762]
+layout_mode = 0
+offset_left = 250.0
+offset_top = 500.0
+offset_right = 879.0
+offset_bottom = 603.0
+
+[node name="NumPlayers" type="Label" parent="VBoxContainer" unique_id=916406154]
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_font_sizes/font_size = 20
+text = "# of players in room (includes you!): 1"
+
+[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer" unique_id=770844268]
+layout_mode = 2
+alignment = 1
+
+[node name="LobbyCode" type="Label" parent="VBoxContainer/HBoxContainer" unique_id=135557442]
+layout_mode = 2
+theme_override_font_sizes/font_size = 20
+text = "Lobby Code: "
+horizontal_alignment = 1
+
+[node name="CopyCode" type="Button" parent="VBoxContainer/HBoxContainer" unique_id=1435113294]
+layout_mode = 2
+theme_override_font_sizes/font_size = 16
+text = "Copy"
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="VBoxContainer" unique_id=51094920]
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_constants/separation = 30
+
+[node name="Hosting" type="HBoxContainer" parent="VBoxContainer/HBoxContainer2" unique_id=436741441]
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="Start" type="Button" parent="VBoxContainer/HBoxContainer2/Hosting" unique_id=746119537]
+layout_mode = 2
+theme_override_font_sizes/font_size = 20
+text = "Start new lobby"
+
+[node name="Stop" type="Button" parent="VBoxContainer/HBoxContainer2/Hosting" unique_id=912570247]
+layout_mode = 2
+theme_override_font_sizes/font_size = 20
+text = "End room"
+
+[node name="Seal" type="Button" parent="VBoxContainer/HBoxContainer2/Hosting" unique_id=133934621]
+layout_mode = 2
+theme_override_font_sizes/font_size = 20
+text = "Start Game"
+
+[node name="Connect" type="HBoxContainer" parent="VBoxContainer/HBoxContainer2" unique_id=2018202730]
+custom_minimum_size = Vector2(200, 0)
 layout_mode = 2
 
-[node name="Label" type="Label" parent="VBoxContainer/Connect" unique_id=453688658]
+[node name="Label" type="Label" parent="VBoxContainer/HBoxContainer2/Connect" unique_id=453688658]
 visible = false
 layout_mode = 2
-text = "Connect to:"
+text = "Connect to: "
 
-[node name="Host" type="LineEdit" parent="VBoxContainer/Connect" unique_id=463720956]
+[node name="Host" type="LineEdit" parent="VBoxContainer/HBoxContainer2/Connect" unique_id=463720956]
 visible = false
 layout_mode = 2
 size_flags_horizontal = 3
 text = "ws://localhost:9080"
 
-[node name="Room" type="Label" parent="VBoxContainer/Connect" unique_id=1811372676]
+[node name="Room" type="Label" parent="VBoxContainer/HBoxContainer2/Connect" unique_id=1811372676]
 layout_mode = 2
-size_flags_vertical = 5
-text = "Room"
+theme_override_font_sizes/font_size = 20
+text = "Join lobby: "
 
-[node name="RoomSecret" type="LineEdit" parent="VBoxContainer/Connect" unique_id=596011870]
+[node name="RoomSecret" type="LineEdit" parent="VBoxContainer/HBoxContainer2/Connect" unique_id=596011870]
 layout_mode = 2
-placeholder_text = "secret"
+theme_override_font_sizes/font_size = 20
+placeholder_text = "lobby id"
 
-[node name="Mesh" type="CheckBox" parent="VBoxContainer/Connect" unique_id=829962375]
+[node name="Mesh" type="CheckBox" parent="VBoxContainer/HBoxContainer2/Connect" unique_id=829962375]
 visible = false
 layout_mode = 2
 button_pressed = true
 text = "Mesh"
 
-[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer" unique_id=51094920]
-layout_mode = 2
-
-[node name="Start" type="Button" parent="VBoxContainer/HBoxContainer" unique_id=746119537]
-layout_mode = 2
-text = "Start"
-
-[node name="Stop" type="Button" parent="VBoxContainer/HBoxContainer" unique_id=912570247]
-layout_mode = 2
-text = "Stop"
-
-[node name="Seal" type="Button" parent="VBoxContainer/HBoxContainer" unique_id=133934621]
-layout_mode = 2
-text = "Seal"
-
-[node name="Ping" type="Button" parent="VBoxContainer/HBoxContainer" unique_id=1397994908]
-layout_mode = 2
-text = "Ping"
-
-[node name="Peers" type="Button" parent="VBoxContainer/HBoxContainer" unique_id=1563144217]
-layout_mode = 2
-text = "Print peers"
-
-[node name="TextEdit" type="TextEdit" parent="VBoxContainer" unique_id=223082690]
-layout_mode = 2
-size_flags_vertical = 3
-
-[connection signal="pressed" from="VBoxContainer/HBoxContainer/Start" to="." method="_on_start_pressed"]
-[connection signal="pressed" from="VBoxContainer/HBoxContainer/Stop" to="." method="_on_stop_pressed"]
-[connection signal="pressed" from="VBoxContainer/HBoxContainer/Seal" to="." method="_on_seal_pressed"]
-[connection signal="pressed" from="VBoxContainer/HBoxContainer/Ping" to="." method="_on_ping_pressed"]
-[connection signal="pressed" from="VBoxContainer/HBoxContainer/Peers" to="." method="_on_peers_pressed"]
+[connection signal="pressed" from="VBoxContainer/HBoxContainer/CopyCode" to="." method="_on_copy_code_pressed"]
+[connection signal="pressed" from="VBoxContainer/HBoxContainer2/Hosting/Start" to="." method="_on_start_pressed"]
+[connection signal="pressed" from="VBoxContainer/HBoxContainer2/Hosting/Stop" to="." method="_on_stop_pressed"]
+[connection signal="pressed" from="VBoxContainer/HBoxContainer2/Hosting/Seal" to="." method="_on_seal_pressed"]
