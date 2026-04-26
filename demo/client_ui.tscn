@@ -127,6 +127,10 @@ text = "Mesh"
 
 [node name="menu" parent="." unique_id=630353283 instance=ExtResource("5_sgolo")]
 layout_mode = 0
+offset_left = 135.0
+offset_top = -116.0
+offset_right = 175.0
+offset_bottom = -76.0
 
 [connection signal="pressed" from="VBoxContainer/HBoxContainer/CopyCode" to="." method="_on_copy_code_pressed"]
 [connection signal="pressed" from="VBoxContainer/HBoxContainer2/Hosting/Start" to="." method="_on_start_pressed"]
