@@ -5,3 +5,4 @@ res://multiplayer_player.tscn
 res://gridworld.gd
 res://demo/client_ui.gd
 res://menu.tscn
+res://demo/main.tscn
