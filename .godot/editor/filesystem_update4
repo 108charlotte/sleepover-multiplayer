@@ -1,6 +1,9 @@
-res://demo/music.tscn
-res://demo/music.gd
-res://default_bus_layout.tres
+res://server_node/package.json
+res://multiplayer_player.tscn
+res://demo/client_ui.gd
 res://gridworld.gd
 res://map.tscn
+res://demo/camera_2d.gd
+res://demo/menu.tscn
 res://scripts/multiplayer/multiplayer_player.gd
+res://demo/client_ui.tscn

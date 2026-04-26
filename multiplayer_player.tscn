@@ -1,84 +1,6 @@
 [gd_scene format=3 uid="uid://bt7edhhacv13l"]
 
 [ext_resource type="Script" uid="uid://be5xjtiv76a84" path="res://scripts/multiplayer/multiplayer_player.gd" id="1_5ouof"]
-[ext_resource type="Texture2D" uid="uid://bftuhp1xe2kww" path="res://tiles/Characters/green_character.png" id="1_ti8do"]
-[ext_resource type="Texture2D" uid="uid://bstpn56f48cj" path="res://tiles/Characters/purple_character.png" id="3_7s4ra"]
-[ext_resource type="Texture2D" uid="uid://c2cg7asfyta78" path="res://tiles/Characters/yellow_character.png" id="4_bkyr2"]
-
-[sub_resource type="SpriteFrames" id="SpriteFrames_5ouof"]
-animations = [{
-"frames": [{
-"duration": 1.0,
-"texture": ExtResource("1_ti8do")
-}],
-"loop": true,
-"name": &"default",
-"speed": 5.0
-}, {
-"frames": [{
-"duration": 1.0,
-"texture": ExtResource("3_7s4ra")
-}],
-"loop": true,
-"name": &"idle_down",
-"speed": 5.0
-}, {
-"frames": [{
-"duration": 1.0,
-"texture": ExtResource("3_7s4ra")
-}],
-"loop": true,
-"name": &"idle_left",
-"speed": 5.0
-}, {
-"frames": [{
-"duration": 1.0,
-"texture": ExtResource("3_7s4ra")
-}],
-"loop": true,
-"name": &"idle_right",
-"speed": 5.0
-}, {
-"frames": [{
-"duration": 1.0,
-"texture": ExtResource("3_7s4ra")
-}],
-"loop": true,
-"name": &"idle_up",
-"speed": 5.0
-}, {
-"frames": [{
-"duration": 1.0,
-"texture": ExtResource("4_bkyr2")
-}],
-"loop": true,
-"name": &"walk_down",
-"speed": 5.0
-}, {
-"frames": [{
-"duration": 1.0,
-"texture": ExtResource("4_bkyr2")
-}],
-"loop": true,
-"name": &"walk_left",
-"speed": 5.0
-}, {
-"frames": [{
-"duration": 1.0,
-"texture": ExtResource("4_bkyr2")
-}],
-"loop": true,
-"name": &"walk_right",
-"speed": 5.0
-}, {
-"frames": [{
-"duration": 1.0,
-"texture": ExtResource("4_bkyr2")
-}],
-"loop": true,
-"name": &"walk_up",
-"speed": 5.0
-}]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_ti8do"]
 
@@ -86,20 +8,12 @@ animations = [{
 radius = 76.02631
 
 [sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_5ouof"]
-properties/0/path = NodePath("AnimatedSprite2D:animation")
+properties/0/path = NodePath(".:_target_position")
 properties/0/spawn = true
 properties/0/replication_mode = 1
-properties/1/path = NodePath(".:_target_position")
-properties/1/spawn = true
-properties/1/replication_mode = 1
 
 [node name="CharacterBody2D" type="CharacterBody2D" unique_id=1898099362]
 script = ExtResource("1_5ouof")
-player_id = null
-role = null
-
-[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=1510116359]
-sprite_frames = SubResource("SpriteFrames_5ouof")
 
 [node name="MovementCollisionShape2D" type="CollisionShape2D" parent="." unique_id=1653232095]
 scale = Vector2(4.4, 4.4)
@@ -112,6 +26,8 @@ shape = SubResource("CircleShape2D_7s4ra")
 
 [node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="." unique_id=1267194072]
 replication_config = SubResource("SceneReplicationConfig_5ouof")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=921448940]
 
 [connection signal="tree_entered" from="ActionCollisionShape2D" to="." method="_on_action_collision_shape_entered"]
 [connection signal="tree_exited" from="ActionCollisionShape2D" to="." method="_on_action_collision_shape_exited"]

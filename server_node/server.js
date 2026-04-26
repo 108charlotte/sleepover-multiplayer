@@ -158,21 +158,19 @@ const lobbies = new Map();
 let peersCount = 0;
 
 function joinLobby(peer, pLobby, mesh) {
-	let lobbyName = pLobby;
-	if (lobbyName === '') {
-		if (lobbies.size >= MAX_LOBBIES) {
-			throw new ProtoError(4000, STR_TOO_MANY_LOBBIES);
-		}
-		// Peer must not already be in a lobby
-		if (peer.lobby !== '') {
-			throw new ProtoError(4000, STR_ALREADY_IN_LOBBY);
-		}
-		lobbyName = randomSecret();
-		lobbies.set(lobbyName, new Lobby(lobbyName, peer.id, mesh));
-		console.log(`Peer ${peer.id} created lobby ${lobbyName}`);
-		console.log(`Open lobbies: ${lobbies.size}`);
-	}
-	const lobby = lobbies.get(lobbyName);
+    let lobbyName = pLobby;
+    if (lobbyName === '') {
+        lobbyName = randomSecret();
+    }
+    // Create lobby if it doesn't exist yet
+    if (!lobbies.has(lobbyName)) {
+        if (lobbies.size >= MAX_LOBBIES) {
+            throw new ProtoError(4000, STR_TOO_MANY_LOBBIES);
+        }
+        lobbies.set(lobbyName, new Lobby(lobbyName, peer.id, mesh));
+        console.log(`Peer ${peer.id} created lobby ${lobbyName}`);
+    }
+    const lobby = lobbies.get(lobbyName);
 	if (!lobby) {
 		throw new ProtoError(4000, STR_LOBBY_DOES_NOT_EXISTS);
 	}

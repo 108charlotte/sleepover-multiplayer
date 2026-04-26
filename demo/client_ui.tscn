@@ -4,6 +4,7 @@
 [ext_resource type="Script" uid="uid://dd8irriksq2si" path="res://client/multiplayer_client.gd" id="2"]
 [ext_resource type="PackedScene" uid="uid://7alj3l2ds1x2" path="res://map.tscn" id="3_jkibb"]
 [ext_resource type="Script" uid="uid://ciw6wl1uvy7du" path="res://gridworld.gd" id="4_dmi1k"]
+[ext_resource type="PackedScene" uid="uid://cb312fnoiq3hb" path="res://menu.tscn" id="5_sgolo"]
 
 [node name="ClientUI" type="Control" unique_id=1968491779]
 custom_minimum_size = Vector2(320, 200)
@@ -25,16 +26,6 @@ script = ExtResource("4_dmi1k")
 [node name="MultiplayerSpawner" type="MultiplayerSpawner" parent="gridworld" unique_id=2067906896]
 _spawnable_scenes = PackedStringArray("uid://bt7edhhacv13l")
 spawn_path = NodePath("..")
-
-[node name="MenuBackground" type="ColorRect" parent="." unique_id=1754278269]
-layout_mode = 0
-offset_left = 1.0
-offset_top = 8.0
-offset_right = 1159.0
-offset_bottom = 643.0
-size_flags_vertical = 3
-localize_numeral_system = false
-color = Color(0.3854925, 0.38549247, 0.38549247, 1)
 
 [node name="Players" type="Control" parent="." unique_id=493135582]
 anchors_preset = 0
@@ -124,12 +115,8 @@ layout_mode = 2
 button_pressed = true
 text = "Mesh"
 
-[node name="menu" parent="." unique_id=630353283]
+[node name="menu" parent="." unique_id=616408434 instance=ExtResource("5_sgolo")]
 layout_mode = 0
-offset_left = 135.0
-offset_top = -116.0
-offset_right = 175.0
-offset_bottom = -76.0
 
 [connection signal="pressed" from="VBoxContainer/HBoxContainer/CopyCode" to="." method="_on_copy_code_pressed"]
 [connection signal="pressed" from="VBoxContainer/HBoxContainer2/Hosting/Start" to="." method="_on_start_pressed"]

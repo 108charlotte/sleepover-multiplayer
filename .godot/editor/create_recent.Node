@@ -1,5 +1,7 @@
-AudioStreamPlayer
-AudioStreamPlayer2D
+MultiplayerSynchronizer
+Sprite2D
+Node2D
+Area2D
 Parallax2D
 CollisionShape2D
 Camera2D
@@ -11,4 +13,3 @@ HBoxContainer
 VBoxContainer
 Button
 Label
-ColorRect
