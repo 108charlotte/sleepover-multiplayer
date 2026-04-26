@@ -2,6 +2,8 @@ extends CharacterBody2D
 const GRID_SIZE = 128
 const MOVE_SPEED = 0
 @onready var animated_sprite = $AnimatedSprite2D
+@onready var movement_shape = $MovementCollisionShape2D
+@onready var action_shape = $ActionCollisionShape2D
 @export var player_id := 1:
 	set(id):
 		player_id = id
@@ -10,11 +12,21 @@ var _last_direction := Vector2.DOWN  # track for idle animation
 var _initial_camera_global_position := Vector2.ZERO
 var _initial_camera_global_rotation := 0.0
 
+enum Role { DETECTIVE, NIGHTMARE, DREAMER }
+@export var role: int = Role.DREAMER 		#fahh
+var flagged_players: Array = []
+var is_frozen := false
+
+var interaction_targets: Array = []
+
+
 func _enter_tree() -> void:
 	player_id = int(name)
 	set_multiplayer_authority(int(name))
 
 func _ready() -> void:
+	add_to_group("players")
+	
 	print("Player %s | my peer ID: %s | is authority: %s" % [
 		name,
 		multiplayer.get_unique_id(),
@@ -41,7 +53,29 @@ func _ready() -> void:
 				camera.set_current(false)
 			camera.set_process(false)
 
+@rpc("reliable")
+func set_role(new_role: int):
+	role = new_role
+	print("player ", name, "role ", role)
+
+func _on_action_collision_shape_entered(body) -> void:
+	if body == self:
+		return
+	interaction_targets.append(body)
+func _on_action_collision_shape_exited(body) -> void:
+	interaction_targets.erase(body)
+
+func _input(event):
+	if not is_multiplayer_authority():
+		return
+	if event.is_action_pressed("action"):
+		if interactions_target.size() > 0:
+			var target = interaction_targets[0]
+			handle_interaction.rpc(target)
+
 func _physics_process(delta: float) -> void:
+	if is_frozen:
+		return
 	if not is_multiplayer_authority():
 		position = position.move_toward(_target_position, GRID_SIZE)  # smooth follow
 		return
@@ -66,6 +100,7 @@ func _move(direction: Vector2) -> void:
 	var space = get_world_2d().direct_space_state
 	var query = PhysicsRayQueryParameters2D.create(position, next_position)
 	query.exclude = [self]
+	
 	var result = space.intersect_ray(query)
 	if result:
 		return
@@ -74,6 +109,7 @@ func _move(direction: Vector2) -> void:
 	position = _target_position  # ← this was missing
 	_play_walk_animation()
 	_play_idle_animation()  # ← also add this back begins
+	
 
 func _play_walk_animation() -> void:
 	if _last_direction == Vector2.LEFT:
@@ -95,6 +131,22 @@ func _play_idle_animation() -> void:
 	elif _last_direction == Vector2.DOWN:
 		animated_sprite.play("idle_down")
 
+@rpc("call_local")
+func interaction_handling(target):
+	match role:
+		Role.DETECTIVE:
+			detective_interact(target)
+		Role.NIGHTMARE:
+			nightmare_interact(target)
+		Role.DREAMER:
+			dreamer_interact(target)
+
+func detective_interact(target):
+	
+func nightmare_interact(target):
+	
+func dreamer_interact(target):
+	
 func _exit_tree() -> void:
 	# When this player node leaves the scene tree (player disconnected),
 	# hard reset the camera to its initial global transform and disable it.

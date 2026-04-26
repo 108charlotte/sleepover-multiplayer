@@ -95,6 +95,8 @@ properties/1/replication_mode = 1
 
 [node name="CharacterBody2D" type="CharacterBody2D" unique_id=1898099362]
 script = ExtResource("1_5ouof")
+player_id = null
+role = null
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=1510116359]
 sprite_frames = SubResource("SpriteFrames_5ouof")
@@ -110,3 +112,6 @@ shape = SubResource("CircleShape2D_7s4ra")
 
 [node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="." unique_id=1267194072]
 replication_config = SubResource("SceneReplicationConfig_5ouof")
+
+[connection signal="tree_entered" from="ActionCollisionShape2D" to="." method="_on_action_collision_shape_entered"]
+[connection signal="tree_exited" from="ActionCollisionShape2D" to="." method="_on_action_collision_shape_exited"]
