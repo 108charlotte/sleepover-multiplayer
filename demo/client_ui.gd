@@ -101,12 +101,14 @@ func _connected(id: int, use_mesh: bool) -> void:
 	$VBoxContainer/HBoxContainer2/Hosting/Stop.disabled = not is_host
 	$VBoxContainer/HBoxContainer2/Hosting/Seal.disabled = not is_host
 	
-	$VBoxContainer/HBoxContainer2/Hosting/Start.hide()
-	
 	if not is_host: 
 		$VBoxContainer/HBoxContainer2/Hosting/Stop.hide()
 		$VBoxContainer/HBoxContainer2/Hosting/Seal.hide()
+		# Non-host sees "Join lobby" button, keep it visible
+		$VBoxContainer/HBoxContainer2/Hosting/Start.show()
+		$VBoxContainer/HBoxContainer2/Hosting/Start.disabled = false
 	else: 
+		$VBoxContainer/HBoxContainer2/Hosting/Start.hide() # only hide for host
 		$VBoxContainer/HBoxContainer2/Hosting/Stop.show()
 		$VBoxContainer/HBoxContainer2/Hosting/Seal.show()
 	print("updated visible buttons")

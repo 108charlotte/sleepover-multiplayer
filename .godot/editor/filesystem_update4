@@ -10,3 +10,4 @@ res://menu.tscn
 res://demo/voting.tscn
 res://demo/voting.gd
 res://demo/main.tscn
+res://demo/client_ui.tscn
