@@ -1,0 +1,28 @@
+[gd_scene format=3 uid="uid://cb312fnoiq3hb"]
+
+[ext_resource type="Texture2D" uid="uid://chos5mdp1mho1" path="res://assets/IMG_1938.png" id="1_ouk20"]
+[ext_resource type="Texture2D" uid="uid://drdbramisgn85" path="res://assets/IMG_1936.png" id="2_mae5d"]
+[ext_resource type="Texture2D" uid="uid://b5ldqigfv2gxv" path="res://assets/IMG_1939.png" id="3_mae5d"]
+[ext_resource type="Texture2D" uid="uid://bvmetciaohqnm" path="res://assets/IMG_1934.png" id="4_4hy44"]
+
+[node name="menu" type="Node2D" unique_id=630353283]
+
+[node name="background" type="Sprite2D" parent="." unique_id=69273040]
+position = Vector2(525, 306)
+scale = Vector2(0.3, 0.3)
+texture = ExtResource("1_ouk20")
+
+[node name="ppl" type="Sprite2D" parent="." unique_id=49151565]
+position = Vector2(343, 325)
+scale = Vector2(0.16, 0.16)
+texture = ExtResource("2_mae5d")
+
+[node name="border" type="Sprite2D" parent="." unique_id=731695902]
+position = Vector2(342.00003, 325)
+scale = Vector2(0.165, 0.165)
+texture = ExtResource("3_mae5d")
+
+[node name="title" type="Sprite2D" parent="." unique_id=244259797]
+position = Vector2(342, 312)
+scale = Vector2(0.155, 0.155)
+texture = ExtResource("4_4hy44")
