@@ -7,7 +7,7 @@ const CHARACTER_DIR = "res://tiles/Characters/"
 
 @onready var sprite = $Sprite2D
 @onready var movement_shape = $MovementCollisionShape2D
-@onready var action_shape = $ActionCollisionShape2D
+@onready var action_shape = $Area2D
 @export var player_id := 1:
 	set(id):
 		player_id = id

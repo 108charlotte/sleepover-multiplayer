@@ -4,13 +4,13 @@
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_ti8do"]
 
-[sub_resource type="CircleShape2D" id="CircleShape2D_7s4ra"]
-radius = 76.02631
-
 [sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_5ouof"]
 properties/0/path = NodePath(".:_target_position")
 properties/0/spawn = true
 properties/0/replication_mode = 1
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_7s4ra"]
+radius = 76.02631
 
 [node name="CharacterBody2D" type="CharacterBody2D" unique_id=1898099362]
 script = ExtResource("1_5ouof")
@@ -19,9 +19,6 @@ script = ExtResource("1_5ouof")
 scale = Vector2(4.4, 4.4)
 shape = SubResource("CircleShape2D_ti8do")
 
-[node name="ActionCollisionShape2D" type="CollisionShape2D" parent="." unique_id=206072856]
-shape = SubResource("CircleShape2D_7s4ra")
-
 [node name="Camera2D" type="Camera2D" parent="." unique_id=1906101551]
 
 [node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="." unique_id=1267194072]
@@ -29,5 +26,10 @@ replication_config = SubResource("SceneReplicationConfig_5ouof")
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=921448940]
 
-[connection signal="tree_entered" from="ActionCollisionShape2D" to="." method="_on_action_collision_shape_entered"]
-[connection signal="tree_exited" from="ActionCollisionShape2D" to="." method="_on_action_collision_shape_exited"]
+[node name="Area2D" type="Area2D" parent="." unique_id=1670914778]
+
+[node name="ActionCollisionShape2D" type="CollisionShape2D" parent="Area2D" unique_id=206072856]
+shape = SubResource("CircleShape2D_7s4ra")
+
+[connection signal="area_entered" from="Area2D" to="." method="_on_action_collision_shape_entered"]
+[connection signal="area_exited" from="Area2D" to="." method="_on_action_collision_shape_exited"]
