@@ -1,3 +1,6 @@
 res://server_node/package.json
 res://multiplayer_player.tscn
 res://demo/client_ui.gd
+res://menu.tscn
+res://demo/main.tscn
+res://demo/camera_2d.gd

@@ -10,6 +10,17 @@ const MAX_REVEAL_PRESSES = 5
 @export var player_id := 1:
 	set(id):
 		player_id = id
+@export var sprite_index: int = 0:
+	set(val):
+		sprite_index = val
+		_update_sprite_visuals()
+@export var sprite_path: String = "":
+	set(val):
+		sprite_path = val
+		if val != "" and FileAccess.file_exists(val):
+			var tex = load(val)
+			$AnimatedSprite2D.texture = tex
+
 var _target_position := Vector2.ZERO
 var _last_direction := Vector2.DOWN
 var _initial_camera_global_position := Vector2.ZERO
@@ -119,6 +130,9 @@ func reveal_footprint_tile(grid_pos: Vector2i) -> void:
 
 # ─── Input ────────────────────────────────────────────────────────────────────
 
+func _update_sprite_visuals():
+	if not is_inside_tree(): await ready
+	var path = ""
 func _on_action_collision_shape_entered(body) -> void:
 	if body == self:
 		return
