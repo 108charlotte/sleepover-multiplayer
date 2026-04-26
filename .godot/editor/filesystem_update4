@@ -1,2 +1,7 @@
-res://menu.tscn
+res://map.tscn
 res://demo/client_ui.tscn
+res://scripts/multiplayer/multiplayer_player.gd
+res://multiplayer_player.tscn
+res://gridworld.gd
+res://demo/client_ui.gd
+res://menu.tscn
