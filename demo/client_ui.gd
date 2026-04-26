@@ -39,11 +39,8 @@ func _ready() -> void:
 	await get_tree().process_frame
 	_on_start_pressed()
 
-# Remove this line:
-# @onready var splash: Control = $menu
-
 func _input(event: InputEvent) -> void:
-	if $menu.visible:
+	if splash.visible:
 		if event is InputEventMouseButton and event.pressed:
 			get_viewport().set_input_as_handled()
 			_dismiss_splash()
@@ -53,8 +50,8 @@ func _input(event: InputEvent) -> void:
 
 func _dismiss_splash() -> void:
 	var tween = create_tween()
-	tween.tween_property($menu, "modulate:a", 0.0, 0.5)
-	tween.tween_callback($menu.hide)
+	tween.tween_property(splash, "modulate:a", 0.0, 0.5)
+	tween.tween_callback(splash.hide)
 
 
 @rpc("any_peer", "call_local")
@@ -120,7 +117,7 @@ func _disconnected() -> void:
 
 func _reset_ui() -> void:
 	$VBoxContainer/HBoxContainer2.show()
-	$menu.show()
+	$MenuBackground.show()
 	
 	$VBoxContainer/HBoxContainer/LobbyCode.hide()
 	$VBoxContainer/HBoxContainer/CopyCode.hide()
@@ -149,7 +146,7 @@ func _lobby_joined(lobby: String) -> void:
 func _lobby_sealed() -> void:
 	_log("[Signaling] Lobby has been sealed")
 	$VBoxContainer/HBoxContainer2.hide()
-	$menu.hide()
+	$MenuBackground.hide()
 	$VBoxContainer/HBoxContainer/LobbyCode.hide()
 	$VBoxContainer/HBoxContainer/CopyCode.hide()
 	$VBoxContainer/NumPlayers.hide()

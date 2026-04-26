@@ -3,6 +3,7 @@
 [ext_resource type="Script" uid="uid://drqhtg0onjeuf" path="res://demo/main.gd" id="1"]
 [ext_resource type="PackedScene" uid="uid://d0xak1rv4tda0" path="res://demo/client_ui.tscn" id="2"]
 [ext_resource type="Script" uid="uid://16sfrgros1ps" path="res://server/ws_webrtc_server.gd" id="3"]
+[ext_resource type="PackedScene" uid="uid://86w51b5phlf4" path="res://demo/menu.tscn" id="4_dujpc"]
 
 [node name="Control" type="Control" unique_id=846917499]
 layout_mode = 3
@@ -34,3 +35,10 @@ layout_mode = 2
 
 [node name="Server" type="Node" parent="." unique_id=1883081563]
 script = ExtResource("3")
+
+[node name="menu" parent="." unique_id=616408434 instance=ExtResource("4_dujpc")]
+layout_mode = 0
+offset_left = -263.0
+offset_top = 82.0
+offset_right = -223.0
+offset_bottom = 122.0
