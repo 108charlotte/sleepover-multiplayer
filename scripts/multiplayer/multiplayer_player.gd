@@ -3,23 +3,21 @@ const GRID_SIZE = 128
 const MOVE_SPEED = 0
 const FOOTPRINT_EXPIRY = 30.0
 const MAX_REVEAL_PRESSES = 5
+const CHARACTER_DIR = "res://tiles/Characters/"
 
-@onready var animated_sprite = $AnimatedSprite2D
+@onready var sprite = $Sprite2D
 @onready var movement_shape = $MovementCollisionShape2D
 @onready var action_shape = $ActionCollisionShape2D
 @export var player_id := 1:
 	set(id):
 		player_id = id
-@export var sprite_index: int = 0:
-	set(val):
-		sprite_index = val
-		_update_sprite_visuals()
 @export var sprite_path: String = "":
 	set(val):
 		sprite_path = val
-		if val != "" and FileAccess.file_exists(val):
+		if val != "" and ResourceLoader.exists(val):
 			var tex = load(val)
-			$AnimatedSprite2D.texture = tex
+			if tex is Texture2D:
+				sprite.texture = tex
 
 var _target_position := Vector2.ZERO
 var _last_direction := Vector2.DOWN
@@ -56,8 +54,8 @@ func _ready() -> void:
 		multiplayer.get_unique_id(),
 		is_multiplayer_authority()
 	])
+
 	var camera = get_node_or_null("Camera2D")
-	print("Camera found: ", camera)
 	if camera:
 		_initial_camera_global_position = camera.global_position
 		_initial_camera_global_rotation = camera.global_rotation
@@ -71,7 +69,36 @@ func _ready() -> void:
 				camera.clear_current()
 			elif camera.has_method("set_current"):
 				camera.set_current(false)
-			camera.set_process(false)
+
+	# Only the authority picks and broadcasts the sprite
+	if is_multiplayer_authority():
+		var chosen = _pick_random_character()
+		if chosen != "":
+			assign_sprite.rpc(chosen)
+
+func _pick_random_character() -> String:
+	var dir = DirAccess.open(CHARACTER_DIR)
+	if not dir:
+		print("Could not open character directory: ", CHARACTER_DIR)
+		return ""
+	var files: Array = []
+	dir.list_dir_begin()
+	var file = dir.get_next()
+	while file != "":
+		# Only grab image files, skip .import sidecar files
+		if not file.ends_with(".import") and (file.ends_with(".png") or file.ends_with(".jpg") or file.ends_with(".webp")):
+			files.append(CHARACTER_DIR + file)
+		file = dir.get_next()
+	dir.list_dir_end()
+	if files.is_empty():
+		print("No character images found in ", CHARACTER_DIR)
+		return ""
+	return files[randi() % files.size()]
+
+# Called on all peers so everyone sees the same sprite for this player.
+@rpc("call_local", "reliable")
+func assign_sprite(path: String) -> void:
+	sprite_path = path
 
 @rpc("reliable")
 func set_role(new_role: int):
@@ -94,11 +121,9 @@ func _footprint_update() -> void:
 		if cell["recent"] and (now - cell["timestamp"]) > FOOTPRINT_EXPIRY:
 			cell["recent"] = false
 
-# Returns the footprint cell at a grid position, or an empty dict if none.
 func footprint_get(grid_pos: Vector2i) -> Dictionary:
 	return footprint_map.get(grid_pos, {})
 
-# Called locally to mark a tile visible, then broadcasts to all peers.
 func _reveal_nightmare_tile(grid_pos: Vector2i) -> void:
 	for p in get_tree().get_nodes_in_group("players"):
 		if p.role == Role.NIGHTMARE:
@@ -106,15 +131,11 @@ func _reveal_nightmare_tile(grid_pos: Vector2i) -> void:
 			return
 	print("No nightmare player found to reveal tile on")
 
-# RPC so every peer marks this tile visible on the nightmare's footprint map
-# and notifies the overlay to redraw.
 @rpc("call_local", "reliable")
 func reveal_footprint_tile(grid_pos: Vector2i) -> void:
-	# Only meaningful on the nightmare player node this is called on
 	if role != Role.NIGHTMARE:
 		return
 	if not footprint_map.has(grid_pos):
-		# Create a placeholder so the overlay can still show it
 		footprint_map[grid_pos] = {
 			"timestamp": 0.0,
 			"recent": false,
@@ -123,16 +144,12 @@ func reveal_footprint_tile(grid_pos: Vector2i) -> void:
 	else:
 		footprint_map[grid_pos]["visible"] = true
 
-	# Notify the overlay manager to redraw
 	var overlay = get_tree().get_first_node_in_group("footprint_overlay")
 	if overlay:
 		overlay.mark_tile_visible(grid_pos)
 
 # ─── Input ────────────────────────────────────────────────────────────────────
 
-func _update_sprite_visuals():
-	if not is_inside_tree(): await ready
-	var path = ""
 func _on_action_collision_shape_entered(body) -> void:
 	if body == self:
 		return
@@ -145,12 +162,10 @@ func _input(event):
 	if not is_multiplayer_authority():
 		return
 
-	# Escape wakes the dreamer from sleep
 	if event.is_action_pressed("ui_cancel") and is_sleeping:
 		leave_bed.rpc()
 		return
 
-	# Sleeping dreamer presses E to reveal the current tile on the nightmare's footprint map
 	if event.is_action_pressed("action") and is_sleeping and role == Role.DREAMER:
 		if reveal_presses_remaining > 0:
 			var grid_pos := Vector2i(position / GRID_SIZE)
@@ -209,34 +224,22 @@ func _move(direction: Vector2) -> void:
 	_last_direction = direction
 	_target_position = next_position
 	position = _target_position
-	_play_walk_animation()
+	_update_sprite_direction()
 
-	# Record footprint for the nightmare
 	if role == Role.NIGHTMARE:
 		var grid_pos := Vector2i(position / GRID_SIZE)
 		_footprint_record(grid_pos)
 
-# ─── Animations ───────────────────────────────────────────────────────────────
+# ─── Sprite direction ─────────────────────────────────────────────────────────
 
-func _play_walk_animation() -> void:
+func _update_sprite_direction() -> void:
 	if _last_direction == Vector2.LEFT:
-		animated_sprite.play("walk_left")
+		sprite.flip_h = true
 	elif _last_direction == Vector2.RIGHT:
-		animated_sprite.play("walk_right")
-	elif _last_direction == Vector2.UP:
-		animated_sprite.play("walk_up")
-	elif _last_direction == Vector2.DOWN:
-		animated_sprite.play("walk_down")
+		sprite.flip_h = false
 
 func _play_idle_animation() -> void:
-	if _last_direction == Vector2.LEFT:
-		animated_sprite.play("idle_left")
-	elif _last_direction == Vector2.RIGHT:
-		animated_sprite.play("idle_right")
-	elif _last_direction == Vector2.UP:
-		animated_sprite.play("idle_up")
-	elif _last_direction == Vector2.DOWN:
-		animated_sprite.play("idle_down")
+	pass
 
 # ─── Interactions ─────────────────────────────────────────────────────────────
 
@@ -270,7 +273,6 @@ func dreamer_interact(target):
 	else:
 		if target.is_in_group("Beds"):
 			is_sleeping = true
-			animated_sprite.play("sleep")
 			print("Player ", name, " went to sleep")
 		elif target.is_in_group("players"):
 			if target.is_sleeping:
@@ -286,7 +288,6 @@ func freeze():
 func leave_bed():
 	is_sleeping = false
 	reveal_presses_remaining = MAX_REVEAL_PRESSES
-	_play_idle_animation()
 	print("Player ", name, " woke up")
 
 # ─── Cleanup ──────────────────────────────────────────────────────────────────
@@ -294,17 +295,9 @@ func leave_bed():
 func _exit_tree() -> void:
 	var camera = get_node_or_null("Camera2D")
 	if camera:
-		_initial_camera_global_position = camera.global_position
-		_initial_camera_global_rotation = camera.global_rotation
-		if is_multiplayer_authority():
-			# This is our own player on our machine — make camera active
-			if camera.has_method("make_current"):
-				camera.make_current()
-			elif camera.has_method("set_current"):
-				camera.set_current(true)
-			else:
-				# This is another player's node on our machine — disable their camera
-				if camera.has_method("clear_current"):
-					camera.clear_current()
-				elif camera.has_method("set_current"):
-					camera.set_current(false)
+		camera.global_position = _initial_camera_global_position
+		camera.global_rotation = _initial_camera_global_rotation
+		if camera.has_method("clear_current"):
+			camera.clear_current()
+		elif camera.has_method("set_current"):
+			camera.set_current(false)

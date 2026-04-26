@@ -1,3 +1,5 @@
+MultiplayerSynchronizer
+Sprite2D
 Node2D
 Area2D
 Parallax2D
@@ -11,4 +13,3 @@ HBoxContainer
 VBoxContainer
 Button
 Label
-ColorRect
