@@ -1,6 +1,3 @@
-res://demo/main.tscn
 res://demo/client_ui.tscn
-res://demo/client_ui.gd
-res://gridworld.gd
-res://multiplayer_player.tscn
-res://scripts/multiplayer/multiplayer_player.gd
+res://assets/IMG_1934.png
+res://menu.tscn
