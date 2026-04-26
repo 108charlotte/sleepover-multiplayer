@@ -7,6 +7,8 @@ const MOVE_SPEED = 0
 		player_id = id
 var _target_position := Vector2.ZERO
 var _last_direction := Vector2.DOWN  # track for idle animation
+var _initial_camera_global_position := Vector2.ZERO
+var _initial_camera_global_rotation := 0.0
 
 func _enter_tree() -> void:
 	player_id = int(name)
@@ -21,7 +23,23 @@ func _ready() -> void:
 	var camera = get_node_or_null("Camera2D")
 	print("Camera found: ", camera)
 	if camera:
-		camera.enabled = is_multiplayer_authority()
+		# store the camera's initial global transform so we can reset it on disconnect
+		_initial_camera_global_position = camera.global_position
+		_initial_camera_global_rotation = camera.global_rotation
+		# Use Camera2D methods where available to control which camera is active.
+		# Different engine versions expose different APIs; prefer method calls.
+		if is_multiplayer_authority():
+			if camera.has_method("make_current"):
+				camera.make_current()
+			elif camera.has_method("set_current"):
+				camera.set_current(true)
+		else:
+			# Ensure the camera isn't left processing nor marked current
+			if camera.has_method("clear_current"):
+				camera.clear_current()
+			elif camera.has_method("set_current"):
+				camera.set_current(false)
+			camera.set_process(false)
 
 func _physics_process(delta: float) -> void:
 	if not is_multiplayer_authority():
@@ -76,3 +94,19 @@ func _play_idle_animation() -> void:
 		animated_sprite.play("idle_up")
 	elif _last_direction == Vector2.DOWN:
 		animated_sprite.play("idle_down")
+
+func _exit_tree() -> void:
+	# When this player node leaves the scene tree (player disconnected),
+	# hard reset the camera to its initial global transform and disable it.
+	var camera = get_node_or_null("Camera2D")
+	if camera:
+		# restore the camera to the recorded initial world position/rotation
+		camera.global_position = _initial_camera_global_position
+		camera.global_rotation = _initial_camera_global_rotation
+		# disable the camera so it no longer becomes the current view
+		if camera.has_method("clear_current"):
+			camera.clear_current()
+		elif camera.has_method("set_current"):
+			camera.set_current(false)
+		# stop processing to be extra-safe and hide follow behavior
+		camera.set_process(false)

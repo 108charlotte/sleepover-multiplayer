@@ -1,6 +1,5 @@
-res://demo/main.tscn
 res://demo/client_ui.tscn
 res://demo/client_ui.gd
-res://gridworld.gd
-res://multiplayer_player.tscn
+res://client/multiplayer_client.gd
 res://scripts/multiplayer/multiplayer_player.gd
+res://gridworld.gd

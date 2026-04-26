@@ -51,8 +51,9 @@ func _mp_peer_connected(id: int) -> void:
 	_log("[Multiplayer] Peer %d connected" % id)
 	$VBoxContainer/NumPlayers.text = "# of players in room (includes you!): " + _get_num_players()
 	$VBoxContainer/NumPlayers.show()
-	$VBoxContainer/HBoxContainer/LobbyCode.text = "Lobby Code: " + current_lobby
+	$VBoxContainer/HBoxContainer/LobbyCode.text = current_lobby
 	$VBoxContainer/HBoxContainer/LobbyCode.show()
+
 
 
 func _mp_peer_disconnected(id: int) -> void:
@@ -97,6 +98,10 @@ func _reset_ui() -> void:
 	$VBoxContainer/HBoxContainer/CopyCode.hide()
 	$VBoxContainer/NumPlayers.hide()
 
+	# Remove any spawned player nodes (and their cameras) when returning to the join UI.
+	if %gridworld and %gridworld.has_method("clear_players"):
+		%gridworld.clear_players()
+
 	$VBoxContainer/HBoxContainer2/Hosting/Start.show()
 	$VBoxContainer/HBoxContainer2/Hosting/Start.disabled = false
 	$VBoxContainer/HBoxContainer2/Hosting/Stop.hide()
@@ -108,7 +113,7 @@ func _reset_ui() -> void:
 func _lobby_joined(lobby: String) -> void:
 	_log("[Signaling] Joined lobby %s" % lobby)
 	current_lobby = lobby
-	$VBoxContainer/HBoxContainer/LobbyCode.text = "Lobby Code: " + current_lobby
+	$VBoxContainer/HBoxContainer/LobbyCode.text = current_lobby
 	$VBoxContainer/HBoxContainer/LobbyCode.show()
 	$VBoxContainer/HBoxContainer/CopyCode.show()
 
@@ -149,11 +154,10 @@ func _on_stop_pressed() -> void:
 
 
 func _on_copy_code_pressed() -> void:
-	DisplayServer.clipboard_set(current_lobby)
+	JavaScriptBridge.eval("copyToClipboard('%s')" % current_lobby)
 	$VBoxContainer/HBoxContainer/CopyCode.text = "Copied!"
 	await get_tree().create_timer(2.0).timeout
 	$VBoxContainer/HBoxContainer/CopyCode.text = "Copy"
-
 
 func _on_room_text_changed(new_text: String) -> void:
 	if new_text.is_empty():
