@@ -1,9 +1,8 @@
 63f7b34db8d8cdea90c76aacccf841ec
-::res://::1777173608
+::res://::1777189012
 export_presets.cfg::TextFile::-1::1777167310::0::1::::<><><>0<>0<><>::
 gridworld.gd::GDScript::5381690560180962698::1777167310::0::1::::<>Node2D<><>0<>0<><>::
 map.tscn::PackedScene::2246728444360767857::1777167458::0::1::::<><><>0<>0<><>::uid://3e6bdnrs3g3u::::res://tiles/CustomTilemap/tileset.png<>uid://lx4ljrx13hi8::::res://tiles/WallMapItems/floor_wall.png<>uid://cc27ycynbhh41::::res://tiles/WallMapItems/floor_wall_corner.png<>uid://dqwedniy15mo::::res://tiles/WallMapItems/wall.png<>uid://bp04fykqi38es::::res://tiles/WallMapItems/wall_corner.png<>uid://bh33222hi8kn7::::res://tiles/WallMapItems/wall_curve.png<>uid://dqtqjqv84ptsc::::res://tiles/WallMapItems/wall_damaged.png<>uid://c8lvuai68ejdk::::res://tiles/WallMapItems/wall_demolished.png<>uid://8jthuybx60ne::::res://tiles/WallMapItems/wall_diagonal.png<>uid://fsxhhkk7j56l::::res://tiles/WallMapItems/wall_edge.png<>uid://bll701mtsjfrp::::res://tiles/WallMapItems/floor_wall_curve.png<>uid://8neyvas34v0h::::res://tiles/WallMapItems/floor_wall_damaged.png<>uid://ckkdvwtxx7qbm::::res://tiles/WallMapItems/floor_wall_demolished.png<>uid://dkskspki3vpa7::::res://tiles/WallMapItems/floor_wall_diagonal.png<>uid://ha7fb22bnty2::::res://tiles/WallMapItems/floor_wall_edge.png<>uid://cqeyno2iyfxp3::::res://tiles/WallMapItems/floor_wall_half.png<>uid://cyspwvxaduklc::::res://tiles/WallMapItems/floor_wall_secret.png<>uid://d4fybg0qk674q::::res://tiles/WallMapItems/floor_wall_trap.png
-menu.tscn::PackedScene::2381618266624234779::1777173601::0::1::::<><><>0<>0<><>::uid://chos5mdp1mho1::::res://assets/background.png<>uid://drdbramisgn85::::res://assets/content.png<>uid://b5ldqigfv2gxv::::res://assets/border.png<>uid://bvmetciaohqnm::::res://assets/title.png
 multiplayer_player.tscn::PackedScene::3786317404779020723::1777162954::0::1::::<><><>0<>0<><>::uid://be5xjtiv76a84::::res://scripts/multiplayer/multiplayer_player.gd<>uid://bftuhp1xe2kww::::res://tiles/Characters/green_character.png<>uid://bstpn56f48cj::::res://tiles/Characters/purple_character.png<>uid://c2cg7asfyta78::::res://tiles/Characters/yellow_character.png
 package-lock.json::JSON::-1::1777162954::0::1::::<><><>0<>0<><>::
 README.md::TextFile::-1::1777162954::0::1::::<><><>0<>0<><>::
@@ -16,7 +15,7 @@ godot_super-wakatime.gd::GDScript::6277149880384411866::1777162954::0::1::::<>Ed
 plugin.cfg::TextFile::-1::1777162954::0::1::::<><><>0<>0<><>::
 README.md::TextFile::-1::1777162954::0::1::::<><><>0<>0<><>::
 utils.gd::GDScript::5251015809120159908::1777162954::0::1::::<>RefCounted<><>0<>0<><>::
-::res://assets/::1777173608
+::res://assets/::1777173612
 background.png::CompressedTexture2D::5294211676727580210::1777167458::1777173602::1::::<><><>0<>0<>26be07f7b6dcb894af066b804a2a7e92<>res://.godot/imported/background.png-1fdba8b6a966ce2c2ffc607f7c096e95.ctex::
 border.png::CompressedTexture2D::4515005301521444611::1777167458::1777173583::1::::<><><>0<>0<>0ba1e9400171487ba8539f755699c6af<>res://.godot/imported/border.png-11bc9554d67dcb5c2c7c5cf3f612a6d8.ctex::
 content.png::CompressedTexture2D::8358756620602625156::1777167458::1777173595::1::::<><><>0<>0<>b3ba69ce713aebf758f8346f49d780dd<>res://.godot/imported/content.png-e7d42e6e38c123362e77b228e4cb9a17.ctex::
@@ -25,12 +24,14 @@ title.png::CompressedTexture2D::3885435848619895710::1777167458::1777173572::1::
 ::res://client/::1777162954
 multiplayer_client.gd::GDScript::7438470048050344632::1777162954::0::1::::<><><>0<>0<><>::
 ws_webrtc_client.gd::GDScript::8728488251096339975::1777162954::0::1::::<>Node<><>0<>0<><>::
-::res://demo/::1777170766
+::res://demo/::1777189012
 client_ui.gd::GDScript::1556847964005360542::1777170766::0::1::::<>Control<><>0<>0<><>::
-client_ui.tscn::PackedScene::8961483081174963309::1777170766::0::1::::<><><>0<>0<><>::uid://wgfb8vvpxkha::::res://demo/client_ui.gd<>uid://dd8irriksq2si::::res://client/multiplayer_client.gd<>uid://7alj3l2ds1x2::::res://map.tscn<>uid://ciw6wl1uvy7du::::res://gridworld.gd<>uid://86w51b5phlf4::::res://menu.tscn
+client_ui.tscn::PackedScene::8961483081174963309::1777189012::0::1::::<><><>0<>0<><>::uid://wgfb8vvpxkha::::res://demo/client_ui.gd<>uid://dd8irriksq2si::::res://client/multiplayer_client.gd<>uid://7alj3l2ds1x2::::res://map.tscn<>uid://ciw6wl1uvy7du::::res://gridworld.gd<>uid://86w51b5phlf4::::res://demo/menu.tscn
 main.gd::GDScript::8385961740438406997::1777162954::0::1::::<>Control<><>0<>0<><>::
-main.tscn::PackedScene::1730581832910200871::1777170766::0::1::::<><><>0<>0<><>::uid://drqhtg0onjeuf::::res://demo/main.gd<>uid://d0xak1rv4tda0::::res://demo/client_ui.tscn<>uid://16sfrgros1ps::::res://server/ws_webrtc_server.gd
+main.tscn::PackedScene::1730581832910200871::1777173616::0::1::::<><><>0<>0<><>::uid://drqhtg0onjeuf::::res://demo/main.gd<>uid://d0xak1rv4tda0::::res://demo/client_ui.tscn<>uid://16sfrgros1ps::::res://server/ws_webrtc_server.gd
 map.tscn::PackedScene::423130962332338651::1777170766::0::1::::<><><>0<>0<><>::uid://3e6bdnrs3g3u::::res://tiles/CustomTilemap/tileset.png<>uid://lx4ljrx13hi8::::res://tiles/WallMapItems/floor_wall.png<>uid://cc27ycynbhh41::::res://tiles/WallMapItems/floor_wall_corner.png<>uid://dqwedniy15mo::::res://tiles/WallMapItems/wall.png<>uid://bp04fykqi38es::::res://tiles/WallMapItems/wall_corner.png<>uid://bh33222hi8kn7::::res://tiles/WallMapItems/wall_curve.png<>uid://dqtqjqv84ptsc::::res://tiles/WallMapItems/wall_damaged.png<>uid://c8lvuai68ejdk::::res://tiles/WallMapItems/wall_demolished.png<>uid://8jthuybx60ne::::res://tiles/WallMapItems/wall_diagonal.png<>uid://fsxhhkk7j56l::::res://tiles/WallMapItems/wall_edge.png<>uid://bll701mtsjfrp::::res://tiles/WallMapItems/floor_wall_curve.png<>uid://8neyvas34v0h::::res://tiles/WallMapItems/floor_wall_damaged.png<>uid://ckkdvwtxx7qbm::::res://tiles/WallMapItems/floor_wall_demolished.png<>uid://dkskspki3vpa7::::res://tiles/WallMapItems/floor_wall_diagonal.png<>uid://ha7fb22bnty2::::res://tiles/WallMapItems/floor_wall_edge.png<>uid://cqeyno2iyfxp3::::res://tiles/WallMapItems/floor_wall_half.png<>uid://cyspwvxaduklc::::res://tiles/WallMapItems/floor_wall_secret.png<>uid://d4fybg0qk674q::::res://tiles/WallMapItems/floor_wall_trap.png
+menu.tscn::PackedScene::2381618266624234779::1777182258::0::1::::<><><>0<>0<><>::uid://chos5mdp1mho1::::res://assets/background.png<>uid://drdbramisgn85::::res://assets/content.png<>uid://b5ldqigfv2gxv::::res://assets/border.png<>uid://bvmetciaohqnm::::res://assets/title.png<>uid://s6stv03c2ct1::::res://assets/flowers.png
+voting.tscn::PackedScene::6165249734266841668::1777188976::0::1::::<><><>0<>0<><>::
 ::res://export/::1777167310
 index.apple-touch-icon.png::CompressedTexture2D::5381725424145293626::1777167310::1777167310::1::::<><><>0<>0<>902ece33b20e7992bf00b1844a7d5291<>res://.godot/imported/index.apple-touch-icon.png-2786902287ee3c081d87ddba9fd253fe.ctex::
 index.icon.png::CompressedTexture2D::7191613040366249390::1777167310::1777167310::1::::<><><>0<>0<>85b3c3276abe4a26b495e8110cfc0f9c<>res://.godot/imported/index.icon.png-3b121a4922cb9cfa20e3529a349a6f72.ctex::
