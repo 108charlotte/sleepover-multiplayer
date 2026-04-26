@@ -7,6 +7,16 @@ const MOVE_SPEED = 0
 @export var player_id := 1:
 	set(id):
 		player_id = id
+@export var sprite_index: int = 0:
+	set(val):
+		sprite_index = val
+		_update_sprite_visuals()
+@export var sprite_path: String = "":
+	set(val):
+		sprite_path = val
+		$Sprite2D.texture =tex
+
+
 var _target_position := Vector2.ZERO
 var _last_direction := Vector2.DOWN  # track for idle animation
 var _initial_camera_global_position := Vector2.ZERO
@@ -16,7 +26,6 @@ enum Role { DETECTIVE, NIGHTMARE, DREAMER }
 @export var role: int = Role.DREAMER 		#fahh
 var flagged_players: Array = []
 var is_frozen := false
-
 var interaction_targets: Array = []
 
 
@@ -58,6 +67,9 @@ func set_role(new_role: int):
 	role = new_role
 	print("player ", name, "role ", role)
 
+func _update_sprite_visuals():
+	if not is_inside_tree(): await ready
+	var path = ""
 func _on_action_collision_shape_entered(body) -> void:
 	if body == self:
 		return

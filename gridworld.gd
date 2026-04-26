@@ -1,7 +1,15 @@
 extends Node2D
 
+var available_sprites = [
+	"res://tiles/Characters/green_character.png",
+	"res://tiles/Characters/purple_character.png",
+	"res://tiles/Characters/red_character.png",
+	"res://tiles/Characters/yellow_character.png"
+]
+
 const PlayerScene = preload("res://multiplayer_player.tscn")
 const PlayerScript = preload("res://scripts/multiplayer/multiplayer_player.gd")
+const TOTAL_SPRITES = 4
 
 func setup_players() -> void:
 	if multiplayer.is_server():
@@ -17,6 +25,10 @@ func _spawn_player(id: int) -> void:
 	player.name = str(id)
 	add_child(player)
 	player.set_multiplayer_authority(id)
+	
+	if multiplayer.is_server():
+		var random_index = randi() % available_sprites.size()
+		player.sprite_path = available_sprites[random_index]
 
 func _remove_player(id: int) -> void:
 	var player = get_node_or_null(str(id))
