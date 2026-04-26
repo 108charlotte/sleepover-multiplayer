@@ -4,7 +4,7 @@ extends Control
 @onready var host: LineEdit = $VBoxContainer/HBoxContainer2/Connect/Host
 @onready var room: LineEdit = $VBoxContainer/HBoxContainer2/Connect/RoomSecret
 @onready var mesh: CheckBox = $VBoxContainer/HBoxContainer2/Connect/Mesh
-@onready var splash: Control = $menu
+@onready var splash: Control = $"../../../menu"
 
 var current_lobby: String = ""
 
@@ -39,19 +39,22 @@ func _ready() -> void:
 	await get_tree().process_frame
 	_on_start_pressed()
 
+
 func _input(event: InputEvent) -> void:
-	if splash.visible:
-		if event is InputEventMouseButton and event.pressed:
-			get_viewport().set_input_as_handled()
-			_dismiss_splash()
-		elif event is InputEventKey and event.pressed:
-			get_viewport().set_input_as_handled()
-			_dismiss_splash()
+	if not $"../../../menu".visible:
+		return
+	if event is InputEventMouseButton and event.pressed:
+		_dismiss_splash()
+	elif event is InputEventKey and event.pressed:
+		_dismiss_splash()
+
 
 func _dismiss_splash() -> void:
+	if not $"../../../menu".visible:
+		return
 	var tween = create_tween()
-	tween.tween_property(splash, "modulate:a", 0.0, 0.5)
-	tween.tween_callback(splash.hide)
+	tween.tween_property($"../../../menu", "modulate:a", 0.0, 0.5)
+	tween.tween_callback($"../../../menu".hide)
 
 
 @rpc("any_peer", "call_local")
@@ -75,11 +78,10 @@ func _mp_peer_connected(id: int) -> void:
 	$VBoxContainer/HBoxContainer/LobbyCode.text = current_lobby
 	$VBoxContainer/HBoxContainer/LobbyCode.show()
 
-	# Auto-seal when 3 players are in the room, but only the host does it
 	if multiplayer.get_peers().size() + 1 >= 3:
 		if client.rtc_mp.get_unique_id() == 1:
 			client.seal_lobby()
-		
+
 
 func _mp_peer_disconnected(id: int) -> void:
 	_log("[Multiplayer] Peer %d disconnected" % id)
@@ -117,7 +119,8 @@ func _disconnected() -> void:
 
 func _reset_ui() -> void:
 	$VBoxContainer/HBoxContainer2.show()
-	$MenuBackground.show()
+	$"../../../menu".modulate.a = 1.0
+	$"../../../menu".show()
 	
 	$VBoxContainer/HBoxContainer/LobbyCode.hide()
 	$VBoxContainer/HBoxContainer/CopyCode.hide()
@@ -131,7 +134,7 @@ func _reset_ui() -> void:
 	$VBoxContainer/HBoxContainer2/Hosting/Stop.hide()
 	$VBoxContainer/HBoxContainer2/Hosting/Seal.hide()
 
-	room.text = "my-lobby"  # ← was "" before, which made Start create a new lobby
+	room.text = "my-lobby"
 	_on_room_text_changed(room.text)
 
 
@@ -146,7 +149,7 @@ func _lobby_joined(lobby: String) -> void:
 func _lobby_sealed() -> void:
 	_log("[Signaling] Lobby has been sealed")
 	$VBoxContainer/HBoxContainer2.hide()
-	$MenuBackground.hide()
+	$"../../../menu".hide()
 	$VBoxContainer/HBoxContainer/LobbyCode.hide()
 	$VBoxContainer/HBoxContainer/CopyCode.hide()
 	$VBoxContainer/NumPlayers.hide()
