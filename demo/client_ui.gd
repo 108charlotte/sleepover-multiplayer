@@ -10,6 +10,8 @@ var current_lobby: String = ""
 
 func _ready() -> void:
 	host.text = "wss://godot-demo-projects-k0or.onrender.com/"
+	room.text = "my-lobby"
+	_on_room_text_changed(room.text)
 	client.lobby_joined.connect(_lobby_joined)
 	client.lobby_sealed.connect(_lobby_sealed)
 	client.connected.connect(_connected)
@@ -34,6 +36,8 @@ func _ready() -> void:
 	room.text_changed.connect(_on_room_text_changed)
 
 	splash.mouse_filter = Control.MOUSE_FILTER_STOP
+	await get_tree().process_frame
+	_on_start_pressed()
 
 func _input(event: InputEvent) -> void:
 	if splash.visible:
@@ -71,7 +75,11 @@ func _mp_peer_connected(id: int) -> void:
 	$VBoxContainer/HBoxContainer/LobbyCode.text = current_lobby
 	$VBoxContainer/HBoxContainer/LobbyCode.show()
 
-
+	# Auto-seal when 3 players are in the room, but only the host does it
+	if multiplayer.get_peers().size() + 1 >= 3:
+		if client.rtc_mp.get_unique_id() == 1:
+			client.seal_lobby()
+		
 
 func _mp_peer_disconnected(id: int) -> void:
 	_log("[Multiplayer] Peer %d disconnected" % id)
@@ -115,7 +123,6 @@ func _reset_ui() -> void:
 	$VBoxContainer/HBoxContainer/CopyCode.hide()
 	$VBoxContainer/NumPlayers.hide()
 
-	# Remove any spawned player nodes (and their cameras) when returning to the join UI.
 	if %gridworld and %gridworld.has_method("clear_players"):
 		%gridworld.clear_players()
 
@@ -124,7 +131,8 @@ func _reset_ui() -> void:
 	$VBoxContainer/HBoxContainer2/Hosting/Stop.hide()
 	$VBoxContainer/HBoxContainer2/Hosting/Seal.hide()
 
-	room.text = ""
+	room.text = "my-lobby"  # ← was "" before, which made Start create a new lobby
+	_on_room_text_changed(room.text)
 
 
 func _lobby_joined(lobby: String) -> void:

@@ -95,8 +95,6 @@ properties/1/replication_mode = 1
 
 [node name="CharacterBody2D" type="CharacterBody2D" unique_id=1898099362]
 script = ExtResource("1_5ouof")
-player_id = null
-role = null
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=1510116359]
 sprite_frames = SubResource("SpriteFrames_5ouof")
