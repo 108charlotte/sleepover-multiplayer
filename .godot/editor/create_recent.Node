@@ -1,9 +1,9 @@
+Control
 LineEdit
 Node
 MultiplayerSpawner
 HBoxContainer
 VBoxContainer
-Control
 Button
 Label
 ColorRect

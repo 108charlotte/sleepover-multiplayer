@@ -4,6 +4,7 @@ extends Control
 @onready var host: LineEdit = $VBoxContainer/HBoxContainer2/Connect/Host
 @onready var room: LineEdit = $VBoxContainer/HBoxContainer2/Connect/RoomSecret
 @onready var mesh: CheckBox = $VBoxContainer/HBoxContainer2/Connect/Mesh
+@onready var splash: Control = $menu
 
 var current_lobby: String = ""
 
@@ -31,6 +32,22 @@ func _ready() -> void:
 	mesh.disabled = true
 	
 	room.text_changed.connect(_on_room_text_changed)
+
+	splash.mouse_filter = Control.MOUSE_FILTER_STOP
+
+func _input(event: InputEvent) -> void:
+	if splash.visible:
+		if event is InputEventMouseButton and event.pressed:
+			get_viewport().set_input_as_handled()
+			_dismiss_splash()
+		elif event is InputEventKey and event.pressed:
+			get_viewport().set_input_as_handled()
+			_dismiss_splash()
+
+func _dismiss_splash() -> void:
+	var tween = create_tween()
+	tween.tween_property(splash, "modulate:a", 0.0, 0.5)
+	tween.tween_callback(splash.hide)
 
 
 @rpc("any_peer", "call_local")

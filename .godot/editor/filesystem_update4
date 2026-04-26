@@ -3,3 +3,7 @@ res://demo/client_ui.gd
 res://client/multiplayer_client.gd
 res://scripts/multiplayer/multiplayer_player.gd
 res://gridworld.gd
+res://map.tscn
+res://demo/map.tscn
+res://demo/main.tscn
+res://menu.tscn

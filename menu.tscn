@@ -1,11 +1,15 @@
-[gd_scene format=3 uid="uid://cb312fnoiq3hb"]
+[gd_scene format=3 uid="uid://86w51b5phlf4"]
 
 [ext_resource type="Texture2D" uid="uid://chos5mdp1mho1" path="res://assets/IMG_1938.png" id="1_ouk20"]
 [ext_resource type="Texture2D" uid="uid://drdbramisgn85" path="res://assets/IMG_1936.png" id="2_mae5d"]
 [ext_resource type="Texture2D" uid="uid://b5ldqigfv2gxv" path="res://assets/IMG_1939.png" id="3_mae5d"]
 [ext_resource type="Texture2D" uid="uid://bvmetciaohqnm" path="res://assets/IMG_1934.png" id="4_4hy44"]
 
-[node name="menu" type="Node2D" unique_id=630353283]
+[node name="menu" type="Control" unique_id=616408434]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
 
 [node name="background" type="Sprite2D" parent="." unique_id=69273040]
 position = Vector2(525, 306)
