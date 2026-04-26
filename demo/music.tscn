@@ -1,0 +1,11 @@
+[gd_scene format=3 uid="uid://d3f23pcp4po7w"]
+
+[ext_resource type="Script" uid="uid://mys5dm5e0bin" path="res://demo/music.gd" id="1_5xo1q"]
+[ext_resource type="AudioStream" uid="uid://cot6s5oxygckw" path="res://audio/el beat ssiisisisisi.mp3" id="2_5dofe"]
+
+[node name="MusicManager" type="Node2D" unique_id=387323852]
+script = ExtResource("1_5xo1q")
+
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer" parent="." unique_id=1895557522]
+stream = ExtResource("2_5dofe")
+autoplay = true

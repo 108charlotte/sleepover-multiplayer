@@ -19,6 +19,14 @@ config/tags=PackedStringArray("demo", "network", "official")
 run/main_scene="uid://ywkovavp6m8n"
 config/features=PackedStringArray("4.6")
 
+[audio]
+
+buses/default_bus_layout="uid://dmp5i77y03pk3"
+
+[autoload]
+
+MusicManager="*uid://d3f23pcp4po7w"
+
 [debug]
 
 gdscript/warnings/shadowed_variable=false
