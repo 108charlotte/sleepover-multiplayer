@@ -4,7 +4,6 @@ VBoxContainer
 MultiplayerSynchronizer
 Sprite2D
 Node2D
-Area2D
 Parallax2D
 CollisionShape2D
 Camera2D
@@ -12,3 +11,6 @@ Control
 LineEdit
 Node
 MultiplayerSpawner
+HBoxContainer
+VBoxContainer
+Button
