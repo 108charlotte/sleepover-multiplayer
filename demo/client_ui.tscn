@@ -4,7 +4,6 @@
 [ext_resource type="Script" uid="uid://dd8irriksq2si" path="res://client/multiplayer_client.gd" id="2"]
 [ext_resource type="PackedScene" uid="uid://7alj3l2ds1x2" path="res://map.tscn" id="3_jkibb"]
 [ext_resource type="Script" uid="uid://ciw6wl1uvy7du" path="res://gridworld.gd" id="4_dmi1k"]
-[ext_resource type="PackedScene" uid="uid://86w51b5phlf4" path="res://demo/menu.tscn" id="5_sgolo"]
 
 [node name="ClientUI" type="Control" unique_id=1968491779]
 custom_minimum_size = Vector2(320, 200)
@@ -125,7 +124,7 @@ layout_mode = 2
 button_pressed = true
 text = "Mesh"
 
-[node name="menu" parent="." unique_id=630353283 instance=ExtResource("5_sgolo")]
+[node name="menu" parent="." unique_id=630353283]
 layout_mode = 0
 offset_left = 135.0
 offset_top = -116.0

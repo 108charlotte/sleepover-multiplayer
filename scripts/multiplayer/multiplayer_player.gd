@@ -14,8 +14,9 @@ const MOVE_SPEED = 0
 @export var sprite_path: String = "":
 	set(val):
 		sprite_path = val
-		$Sprite2D.texture =tex
-
+		if val != "" and FileAccess.file_exists(val):
+			var tex = load(val)
+			$AnimatedSprite2D.texture = tex
 
 var _target_position := Vector2.ZERO
 var _last_direction := Vector2.DOWN  # track for idle animation
@@ -81,9 +82,9 @@ func _input(event):
 	if not is_multiplayer_authority():
 		return
 	if event.is_action_pressed("action"):
-		if interactions_target.size() > 0:
+		if interaction_targets.size() > 0:
 			var target = interaction_targets[0]
-			handle_interaction.rpc(target)
+			interaction_handling.rpc(target)
 
 func _physics_process(delta: float) -> void:
 	if is_frozen:
@@ -154,11 +155,11 @@ func interaction_handling(target):
 			dreamer_interact(target)
 
 func detective_interact(target):
-	
+	pass
 func nightmare_interact(target):
-	
+	pass
 func dreamer_interact(target):
-	
+	pass
 func _exit_tree() -> void:
 	# When this player node leaves the scene tree (player disconnected),
 	# hard reset the camera to its initial global transform and disable it.
