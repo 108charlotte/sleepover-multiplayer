@@ -10,6 +10,10 @@ anchor_left = 0.0136719
 anchor_top = 0.0166667
 anchor_right = 0.986328
 anchor_bottom = 0.983333
+offset_left = 171.24997
+offset_top = -60.800022
+offset_right = 171.25
+offset_bottom = -60.80005
 script = ExtResource("1")
 
 [node name="VBoxContainer" type="VBoxContainer" parent="." unique_id=692986734]

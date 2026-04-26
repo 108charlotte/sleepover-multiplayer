@@ -1,2 +1,5 @@
 res://menu.tscn
 res://demo/client_ui.tscn
+res://demo/menu.tscn
+res://demo/camera_2d.gd
+res://demo/main.tscn

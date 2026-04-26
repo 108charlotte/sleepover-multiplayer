@@ -1,10 +1,11 @@
 [gd_scene format=3 uid="uid://86w51b5phlf4"]
 
-[ext_resource type="Texture2D" uid="uid://chos5mdp1mho1" path="res://assets/background.png" id="1_ouk20"]
-[ext_resource type="Texture2D" uid="uid://drdbramisgn85" path="res://assets/content.png" id="2_mae5d"]
-[ext_resource type="Texture2D" uid="uid://b5ldqigfv2gxv" path="res://assets/border.png" id="3_mae5d"]
-[ext_resource type="Texture2D" uid="uid://bvmetciaohqnm" path="res://assets/title.png" id="4_4hy44"]
-[ext_resource type="Texture2D" uid="uid://s6stv03c2ct1" path="res://assets/flowers.png" id="5_ytr4m"]
+[ext_resource type="Texture2D" uid="uid://chos5mdp1mho1" path="res://assets/background.png" id="1_ao8el"]
+[ext_resource type="Texture2D" uid="uid://drdbramisgn85" path="res://assets/content.png" id="2_x6ywh"]
+[ext_resource type="Texture2D" uid="uid://b5ldqigfv2gxv" path="res://assets/border.png" id="3_ufggn"]
+[ext_resource type="Texture2D" uid="uid://bvmetciaohqnm" path="res://assets/title.png" id="4_gt33m"]
+[ext_resource type="Texture2D" uid="uid://s6stv03c2ct1" path="res://assets/flowers.png" id="5_jsbmd"]
+[ext_resource type="Script" uid="uid://dhatjsxm4i2nf" path="res://demo/camera_2d.gd" id="6_x6ywh"]
 
 [node name="menu" type="Control" unique_id=616408434]
 layout_mode = 3
@@ -13,43 +14,48 @@ offset_right = 40.0
 offset_bottom = 40.0
 
 [node name="Parallax2D" type="Parallax2D" parent="." unique_id=374007445]
-scroll_scale = Vector2(2, 2)
+scroll_scale = Vector2(1.15, 1.15)
 
 [node name="background" type="Sprite2D" parent="Parallax2D" unique_id=69273040]
 position = Vector2(525, 306)
 scale = Vector2(0.3, 0.3)
-texture = ExtResource("1_ouk20")
+texture = ExtResource("1_ao8el")
 
 [node name="Parallax2D2" type="Parallax2D" parent="." unique_id=1579677243]
-scroll_scale = Vector2(1.7, 1.7)
+scroll_scale = Vector2(1.15, 1.15)
 
-[node name="ppl" type="Sprite2D" parent="Parallax2D2" unique_id=49151565]
+[node name="content" type="Sprite2D" parent="Parallax2D2" unique_id=49151565]
 position = Vector2(343, 325)
 scale = Vector2(0.16, 0.16)
-texture = ExtResource("2_mae5d")
+texture = ExtResource("2_x6ywh")
 
 [node name="Parallax2D3" type="Parallax2D" parent="." unique_id=1214584017]
+visible = false
 
 [node name="border" type="Sprite2D" parent="Parallax2D3" unique_id=731695902]
+visible = false
 position = Vector2(342.00003, 325)
 scale = Vector2(0.165, 0.165)
-texture = ExtResource("3_mae5d")
+texture = ExtResource("3_ufggn")
 
 [node name="Parallax2D4" type="Parallax2D" parent="." unique_id=1353618360]
 scale = Vector2(0.165, 0.165)
-scroll_scale = Vector2(0.8, 0.8)
 
 [node name="title" type="Sprite2D" parent="Parallax2D4" unique_id=244259797]
-position = Vector2(-0.00024414063, -78.78784)
+position = Vector2(2060.6057, 1981.8179)
 scale = Vector2(0.9393939, 0.9393939)
-texture = ExtResource("4_4hy44")
+texture = ExtResource("4_gt33m")
 
 [node name="Flowers" type="Sprite2D" parent="." unique_id=372678738]
 visible = false
 position = Vector2(837, 383)
-texture = ExtResource("5_ytr4m")
+texture = ExtResource("5_jsbmd")
 
 [node name="Camera2D" type="Camera2D" parent="." unique_id=2083017583]
 position = Vector2(576, 324)
-ignore_rotation = false
-limit_enabled = false
+limit_smoothed = true
+position_smoothing_enabled = true
+rotation_smoothing_enabled = true
+drag_horizontal_enabled = true
+drag_vertical_enabled = true
+script = ExtResource("6_x6ywh")
